@@ -2,10 +2,10 @@ use anchor_lang::prelude::*;
 use anchor_spl::token::Token;
 
 
-declare_id!("B4VtAY1hh5hSSEGwbqxmuUQLCHypoav7zbnERREUn61p");
+declare_id!("9nsWkWFdfLAbuX1ymmaVgHFnvFnosCm1CdxjBV9z6MPG");
 
 #[program]
-pub mod hello_world_anchor {
+pub mod team_pool {
     use super::*;
     use anchor_lang::system_program;
     use anchor_spl::token;
@@ -127,7 +127,8 @@ pub mod hello_world_anchor {
        
         let cpi_context =  CpiContext::new(
             ctx.accounts.token_program.to_account_info(),
-            system_program::Transfer {
+            anchor_spl::token::Transfer {
+                authority: ctx.accounts.vault_authority.to_account_info().clone(),
                 from: ctx.accounts.pool_vault_pda.to_account_info().clone(),
                 to: ctx.accounts.vault_authority.to_account_info().clone()
             },
